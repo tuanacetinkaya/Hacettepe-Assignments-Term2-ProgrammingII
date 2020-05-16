@@ -1,11 +1,11 @@
-public class Inpatient extends Examination {
-    Inpatient(){
-        super.setType("Inpatient");
-        totalCost();
+public class Inpatient implements IExamination {
+    @Override
+    public int getCost() {
+        return 10;
     }
 
     @Override
-    public int totalCost() {
-        return super.getCost() + 10;
+    public String getDescription() {
+        return "Inpatient\t";
     }
 }

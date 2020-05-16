@@ -1,11 +1,15 @@
 public class DoctorVisit extends DecoratorExamine {
-    DoctorVisit(Examination examination){
+
+    DoctorVisit(IExamination examination) {
         super(examination);
-        super.setStrExamination("doctorvisit");
+    }
+    @Override
+    public int getCost() {
+        return rootExamination.getCost() + 15;
     }
 
     @Override
-    public int totalCost() {
-        return super.totalCost() + 15;
+    public String getDescription() {
+        return rootExamination.getDescription() + "doctorvisit ";
     }
 }

@@ -1,14 +1,17 @@
 public class Measurements extends DecoratorExamine {
 
-    Measurements(Examination examination){
+    Measurements(IExamination examination){
         super(examination);
-        super.setStrExamination("measurements");
-
+    }
+    @Override
+    public int getCost() {
+        return rootExamination.getCost() + 5;
     }
 
     @Override
-    public int totalCost() {
-        return super.totalCost() + 5;
+    public String getDescription() {
+        return rootExamination.getDescription() + "measurements ";
     }
+
 
 }

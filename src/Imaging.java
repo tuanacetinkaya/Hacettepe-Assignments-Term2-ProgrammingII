@@ -1,11 +1,14 @@
 public class Imaging extends DecoratorExamine {
-    Imaging(Examination examination){
+    Imaging(IExamination examination){
         super(examination);
-        super.setStrExamination("imaging");
+    }
+    @Override
+    public int getCost() {
+        return rootExamination.getCost() + 10;
     }
 
     @Override
-    public int totalCost() {
-        return super.totalCost() + 10;
+    public String getDescription() {
+        return rootExamination.getDescription() + "imaging ";
     }
 }

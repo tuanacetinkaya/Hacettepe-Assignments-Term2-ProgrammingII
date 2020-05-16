@@ -6,7 +6,7 @@ public class Admission {
     private int admissionID;
     private int patientID;
     // size 2 for inpatient and outpatient decorated examinations
-    private ArrayList<Examination> examinations = new ArrayList<Examination>();
+    private ArrayList<IExamination> examinations = new ArrayList<IExamination>();
 
     public Admission(int admissionID, int patientID) {
         this.admissionID = admissionID;
@@ -27,7 +27,7 @@ public class Admission {
         String[] examinationString = new String[examinations.size()+1];
         examinationString[0] = String.format("%d\t%d",admissionID,patientID);
         int index = 1;
-        for(Examination e: examinations){
+        for(IExamination e: examinations){
             examinationString[index++] = e.toString();//todo toString method for examination class
         }
         return String.join("\n",examinationString );
@@ -49,11 +49,11 @@ public class Admission {
         this.patientID = patientID;
     }
 
-    public ArrayList<Examination> getExaminations() {
+    public ArrayList<IExamination> getExaminations() {
         return examinations;
     }
 
-    public void setExaminations(ArrayList<Examination> examinations) {
+    public void setExaminations(ArrayList<IExamination> examinations) {
         this.examinations = examinations;
     }
 

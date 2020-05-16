@@ -1,22 +1,19 @@
-public class DecoratorExamine extends Examination {
+public class DecoratorExamine implements IExamination {
 
-    private Examination rootExamination;
+    protected IExamination rootExamination;
 
-    public DecoratorExamine(Examination examination){
+    DecoratorExamine(IExamination examination){
         rootExamination = examination;
-        super.setOperation(rootExamination.getStrExamination());
+    }
+    @Override
+    public int getCost() {
+        return rootExamination.getCost();
     }
 
     @Override
-    public int totalCost() {
-        return rootExamination.totalCost();
+    public String getDescription() {
+        return rootExamination.getDescription();
     }
 
-    public Examination getRootExamination() {
-        return rootExamination;
-    }
 
-    public void setRootExamination(Examination rootExamination) {
-        this.rootExamination = rootExamination;
-    }
 }

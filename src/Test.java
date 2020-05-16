@@ -1,12 +1,15 @@
 public class Test extends DecoratorExamine {
-    Test(Examination examination){
+    Test(IExamination examination){
         super(examination);
-        super.setStrExamination("test");
 
+    }
+    @Override
+    public int getCost() {
+        return rootExamination.getCost() + 7;
     }
 
     @Override
-    public int totalCost() {
-        return super.totalCost() + 7;
+    public String getDescription() {
+        return rootExamination.getDescription() + "test ";
     }
 }
