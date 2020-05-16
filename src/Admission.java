@@ -13,12 +13,6 @@ public class Admission {
         this.patientID = patientID;
     }
 
-    //todo as an alternative i set the patient option to track the patient more efficiently
-    public Admission(int admissionID, Patient patient) {
-        this.patient = patient;
-        this.admissionID = admissionID;
-    }
-
     public void addExamination(String type, String operations){
         System.out.println("still so much to do"); //todo
     }

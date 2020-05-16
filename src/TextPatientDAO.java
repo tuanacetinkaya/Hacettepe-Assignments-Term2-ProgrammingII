@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * whenever a patient is removed or added, informAdmissionDAO() will be called to synchronize the data
  */
 public class TextPatientDAO implements IPatientDAO {
-    private ArrayList<String> initialPatientList;
+    private final ArrayList<String> initialPatientList;
     private ArrayList<Patient> patients;
 
     TextPatientDAO(){
@@ -31,18 +31,25 @@ public class TextPatientDAO implements IPatientDAO {
 
     @Override
     public void addPatient(Patient p) {
-        //todo
+        patients.add(p);
     }
 
     @Override
     public boolean deletePatient(int patientID) {
-        //todo
+        for(Patient p: patients){
+            if(patientID == p.getPatientID()){
+                patients.remove(p);
+                return true;
+            }
+        }
+        System.out.println("Patient you tried to remove does not exist. Patient ID: " + patientID);
         return false;
     }
 
     @Override
     public void updatePatient(Patient oldP, Patient newP) {
-        //todo
+        patients.remove(oldP);
+        patients.add(newP);
     }
 
     @Override
