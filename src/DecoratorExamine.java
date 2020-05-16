@@ -2,8 +2,6 @@ public class DecoratorExamine extends Examination {
 
     private Examination rootExamination;
 
-    //will not be used.
-
     public DecoratorExamine(Examination examination){
         rootExamination = examination;
         super.setOperation(rootExamination.getStrExamination());
