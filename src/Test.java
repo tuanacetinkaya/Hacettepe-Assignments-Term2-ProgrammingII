@@ -10,6 +10,6 @@ public class Test extends DecoratorExamine {
 
     @Override
     public String getDescription() {
-        return rootExamination.getDescription() + "test ";
+        return rootExamination.getDescription() + "tests ";
     }
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TextAdmissionDAO implements IAdmissionDAO {
 
@@ -24,7 +25,8 @@ public class TextAdmissionDAO implements IAdmissionDAO {
                         Integer.parseInt(infoSplit[1].trim())//patientID
                 );//createAdmission
             }else{
-                temp.addExamination(infoSplit[0], infoSplit[1]);
+                if (temp == null) System.out.println("Your admission file is not in correct format.");
+                else temp.addExamination(infoSplit[0], infoSplit[1]);
             }
         }
     }
@@ -56,18 +58,43 @@ public class TextAdmissionDAO implements IAdmissionDAO {
         return false;
     }
 
-    @Override
-    public void addExamination(int admissionID, String[] operations) {
-
+    private Admission findAdmission(int admissionID){
+        for(Admission admission: admissions){
+            if(admissionID == admission.getAdmissionID()){
+                return admission;
+            }
+        }
+        System.out.println("Patient with admission ID " + admissionID + " cannot be found.");
+        return null;
     }
 
     @Override
-    public int totalCost(int admissionID) {
-        return 0;
+    public void addExamination(int admissionID, String type, String[] operations) {
+        Admission patient = findAdmission(admissionID);
+        if (patient != null) {
+            patient.addExamination(type, operations);
+        }else{
+            System.out.println("Error while adding examination:\n" +
+                    "\tNo such patient with admission ID " + admissionID);
+        }
+    }
+
+    public void addExamination(Admission admission, String type, String[] operations){
+        addExamination(admission.getAdmissionID(),type,operations);
+        //todo might delete
+    }
+
+    @Override
+    public String totalCost(int admissionID) {
+        Admission patient = findAdmission(admissionID);
+        if(patient != null){
+            return patient.totalCost();
+        }
+        else return "TotalCost for admission " + admissionID + " cannot be called.";
     }
 
     @Override
     public ArrayList<Admission> getAdmissions() {
-        return null;
+        return admissions;
     }
 }

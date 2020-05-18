@@ -9,6 +9,14 @@ public class Main {
 
         System.out.println("IT IS OVER");
 
+        admissionDAO.createAdmission(7,23);
+        admissionDAO.addExamination(7,"Inpatient", new String[]{"test", "doctorvisit", "measurements", "test"});
+        //admissionDAO.addExamination(9,"Inpatient", new String[]{"test", "doctorvisit", "measurements", "test"});
+        admissionDAO.deleteAdmission(3);
+        //admissionDAO.totalCost(7);
+        for(Admission admission: admissionDAO.getAdmissions()){
+            System.out.println(admission.toString());
+        }
     }
 
 }
