@@ -1,23 +1,31 @@
-public class Patient {
+public class Patient{
     private int patientID;
     private String surname;
     private String name;
     private String address;
     private String phone;
+
+    //regular constructor has address input row -> as it is used in input.txt
     public Patient(String patientID, String name, String surname, String phone, String address){
-        this.patientID = Integer.valueOf(patientID);
+        this.patientID = Integer.parseInt(patientID);
         this.surname = surname;
         this.name = name;
-        this.address = address.split(": ")[1];
+        this.address = address;
         this.phone = phone;
     }
-
+    //initial patient constructor with input that has "Address: " on it.
     public Patient(String patientID, String nameAndSurname, String phone, String address) {
-        this(patientID, nameAndSurname.split(" ")[0], nameAndSurname.split(" ")[1], phone,address);
+        this(
+                patientID,
+                nameAndSurname.split(" ")[0],
+                nameAndSurname.split(" ")[1],
+                phone,
+                address.split(":")[1].trim()
+        );
     }
 
     public String toString(){
-        return String.format("%d\t%s\t%s %s\t%s\tAddress: %s\n",
+        return String.format("%d\t%s %s\t%s\tAddress: %s",
                 patientID,
                 name, surname,
                 phone,
@@ -63,4 +71,6 @@ public class Patient {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+
 }

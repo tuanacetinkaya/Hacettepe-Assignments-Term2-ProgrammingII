@@ -68,11 +68,11 @@ public class Admission {
         String description = "";
         int totalCost = 0;
         for(IExamination content: examinations){
-            description += content.getDescription() + content.getCost() + "$\n";
+            description += "\t" + content.getDescription() + content.getCost() + "$\n";
             totalCost += content.getCost();
         }
         return "TotalCost for admission " + admissionID +"\n"+
-                description + "Total: " + totalCost + "$";
+                description + "\tTotal: " + totalCost + "$";
     }
 
     public int getAdmissionID() {

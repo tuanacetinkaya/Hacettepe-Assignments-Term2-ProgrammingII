@@ -8,7 +8,7 @@ public class TextPatientDAO implements IPatientDAO {
     private ArrayList<Patient> patients;
 
     TextPatientDAO(){
-        ReadFiles patientFile = new ReadFiles("patient.txt");
+        ReadFiles patientFile = new ReadFiles("patient.txt"); //todo fix it
         initialPatientList = patientFile.getListFormat();
         this.patients = createPatients();
     }
@@ -21,8 +21,8 @@ public class TextPatientDAO implements IPatientDAO {
             initialPatients.add(new Patient(
                     splitInfo[0],//patientID
                     splitInfo[1],//nameAndSurname
-                    splitInfo[2],
-                    splitInfo[3])
+                    splitInfo[2],//phone
+                    splitInfo[3])//address with semi column
             );//add new Patient
         }
         return initialPatients;
@@ -35,14 +35,20 @@ public class TextPatientDAO implements IPatientDAO {
 
     @Override
     public boolean deletePatient(int patientID) {
+        Patient toDelete = null;
+        boolean isRemoved = false;
         for(Patient p: patients){
             if(patientID == p.getPatientID()){
-                patients.remove(p);
-                return true;
+                toDelete = p;
+                isRemoved = true;
             }
         }
-        System.out.println("Patient you tried to remove does not exist. Patient ID: " + patientID);
-        return false;
+        if(isRemoved){
+            patients.remove(toDelete);
+        }else {
+            System.out.println("Patient you tried to remove does not exist. Patient ID: " + patientID);
+        }
+        return isRemoved;
     }
 
     @Override
@@ -54,5 +60,14 @@ public class TextPatientDAO implements IPatientDAO {
     @Override
     public ArrayList<Patient> getPatientList() {
         return patients;
+    }
+
+    public Patient getPatient(int patientID){
+        for(Patient p: patients){
+            if(patientID == p.getPatientID()){
+                return p;
+            }
+        }
+        return null;
     }
 }

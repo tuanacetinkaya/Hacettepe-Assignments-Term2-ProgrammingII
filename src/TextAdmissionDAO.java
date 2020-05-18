@@ -8,7 +8,7 @@ public class TextAdmissionDAO implements IAdmissionDAO {
 
     TextAdmissionDAO(){
 
-        ReadFiles reader = new ReadFiles("admission.txt");
+        ReadFiles reader = new ReadFiles("admission.txt"); //todo fix it
         this.initialAdmissionList = reader.getListFormat();
         this.admissions = new ArrayList<Admission>();
         initializeAdmissions();
@@ -105,12 +105,15 @@ public class TextAdmissionDAO implements IAdmissionDAO {
     }
 
     public void removedPatientUpdate(int patientID){
+        Admission toRemove = null;
         for(Admission admission: admissions){
             if(admission.getPatientID() == patientID){
-                admissions.remove(admission);
+                toRemove = admission;
                 System.out.println("Admission of patient " + patientID +
                         " removed because this patient has removed from the patient database");
             }
         }
+        //will do nothing if it's null (if the patient already has no admissions)
+        admissions.remove(toRemove);
     }
 }
