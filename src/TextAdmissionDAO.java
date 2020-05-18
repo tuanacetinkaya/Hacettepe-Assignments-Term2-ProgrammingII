@@ -1,6 +1,8 @@
 import java.util.ArrayList;
-import java.util.Objects;
 
+/**
+ * implementation of IAdmissionDAO using a Text file database
+ */
 public class TextAdmissionDAO implements IAdmissionDAO {
 
     private final ArrayList<String> initialAdmissionList;
@@ -12,31 +14,6 @@ public class TextAdmissionDAO implements IAdmissionDAO {
         this.initialAdmissionList = reader.getListFormat();
         this.admissions = new ArrayList<Admission>();
         initializeAdmissions();
-    }
-
-    private void initializeAdmissions(){
-        Admission temp = null;
-        for(String info: initialAdmissionList){
-            String[] infoSplit = info.split("\t");
-            if(isNumeric(infoSplit[0])){
-                temp = createAdmission(
-                        Integer.parseInt(infoSplit[0].trim()),//admissionID
-                        Integer.parseInt(infoSplit[1].trim())//patientID
-                );//createAdmission
-            }else{
-                if (temp == null) System.out.println("Your admission file is not in correct format.");
-                else temp.addExamination(infoSplit[0], infoSplit[1]);
-            }
-        }
-    }
-
-    private boolean isNumeric(String value){
-        try{
-            Integer.valueOf(value);
-            return true;
-        }catch (NumberFormatException n){
-            return false;
-        }
     }
 
     @Override
@@ -64,16 +41,6 @@ public class TextAdmissionDAO implements IAdmissionDAO {
         return false;
     }
 
-    private Admission findAdmission(int admissionID){
-        for(Admission admission: admissions){
-            if(admissionID == admission.getAdmissionID()){
-                return admission;
-            }
-        }
-        System.out.println("Patient with admission ID " + admissionID + " cannot be found.");
-        return null;
-    }
-
     @Override
     public void addExamination(int admissionID, String type, String[] operations) {
         Admission patient = findAdmission(admissionID);
@@ -83,11 +50,6 @@ public class TextAdmissionDAO implements IAdmissionDAO {
             System.out.println("Error while adding examination:\n" +
                     "\tNo such patient with admission ID " + admissionID);
         }
-    }
-
-    public void addExamination(Admission admission, String type, String[] operations){
-        addExamination(admission.getAdmissionID(),type,operations);
-        //todo might delete
     }
 
     @Override
@@ -115,5 +77,49 @@ public class TextAdmissionDAO implements IAdmissionDAO {
         }
         //will do nothing if it's null (if the patient already has no admissions)
         admissions.remove(toRemove);
+    }
+
+    /**
+     * this takes the initially given file and create Admission objects of it
+     */
+    private void initializeAdmissions(){
+        Admission temp = null;
+        for(String info: initialAdmissionList){
+            String[] infoSplit = info.split("\t");
+            if(isNumeric(infoSplit[0])){
+                temp = createAdmission(
+                        Integer.parseInt(infoSplit[0].trim()),//admissionID
+                        Integer.parseInt(infoSplit[1].trim())//patientID
+                );//createAdmission
+            }else{
+                if (temp == null) System.out.println("Your admission file is not in correct format.");
+                else temp.addExamination(infoSplit[0], infoSplit[1]);
+            }
+        }
+    }
+
+    /**
+     * to find the respective admission
+     * @param admissionID given
+     * @return the admission
+     */
+    private Admission findAdmission(int admissionID){
+        for(Admission admission: admissions){
+            if(admissionID == admission.getAdmissionID()){
+                return admission;
+            }
+        }
+        System.out.println("Patient with admission ID " + admissionID + " cannot be found.");
+        return null;
+    }
+
+    //this is a helper method to see the admissionID's from file and tell if a new admission needs to be created
+    private boolean isNumeric(String value){
+        try{
+            Integer.valueOf(value);
+            return true;
+        }catch (NumberFormatException n){
+            return false;
+        }
     }
 }

@@ -24,6 +24,7 @@ public class Patient{
         );
     }
 
+    //override to print with the correct format
     public String toString(){
         return String.format("%d\t%s %s\t%s\tAddress: %s",
                 patientID,
@@ -32,6 +33,7 @@ public class Patient{
                 address);
     }
 
+    //getters and setters
     public int getPatientID() {
         return patientID;
     }

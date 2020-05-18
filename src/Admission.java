@@ -1,22 +1,23 @@
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 public class Admission {
-    private Patient patient;
+
     private int admissionID;
     private int patientID;
-    // size 2 for inpatient and outpatient decorated examinations
+    //stored all examination added here
     private ArrayList<IExamination> examinations = new ArrayList<IExamination>();
 
     public Admission(int admissionID, int patientID) {
         this.admissionID = admissionID;
         this.patientID = patientID;
     }
-    public Admission(int admissionID,int patientID, IExamination e){
-        this(admissionID,patientID);
-        examinations.add(e);
-    }
 
+    /**
+     * checks the number of operations and creates the respective IExamination object and adds it in examinations list.
+     * @param type Inpatient or Outpatient
+     * @param allOperations given as array
+     */
     public void addExamination(String type, String[] allOperations){
         if(allOperations.length > 3){
             System.out.println("A patient cannot have more than 3 operations. No operation added for the patient.");
@@ -49,11 +50,12 @@ public class Admission {
         }
         examinations.add(temp);
     }
-
+    //that is a helper overloading method in situations spliting the operations will make the code more complicated
     public void addExamination(String type, String operations){
             addExamination(type, operations.split(" "));
     }
 
+    //to print the Admission in right format
     public String toString(){
         String[] examinationString = new String[examinations.size()+1];
         examinationString[0] = String.format("%d\t%d",admissionID,patientID);
@@ -64,6 +66,7 @@ public class Admission {
         return String.join("\n",examinationString );
     }
 
+    //will be used to print the total cost output to output.txt
     public String totalCost(){
         String description = "";
         int totalCost = 0;
@@ -75,6 +78,7 @@ public class Admission {
                 description + "\tTotal: " + totalCost + "$";
     }
 
+    //getters and setters
     public int getAdmissionID() {
         return admissionID;
     }
@@ -99,13 +103,6 @@ public class Admission {
         this.examinations = examinations;
     }
 
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
 
 
 }

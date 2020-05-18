@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /**
- * whenever a patient is removed or added, informAdmissionDAO() will be called to synchronize the data
+ * this is the implementation of IPatientDAO for Text file database.
  */
 public class TextPatientDAO implements IPatientDAO {
     private final ArrayList<String> initialPatientList;
@@ -13,7 +13,10 @@ public class TextPatientDAO implements IPatientDAO {
         this.patients = createPatients();
     }
 
-
+    /**
+     * initially creates all patient according to the given text file
+     * @return the list of patients
+     */
     private ArrayList<Patient> createPatients(){
         ArrayList<Patient> initialPatients = new ArrayList<Patient>();
         for(String info: initialPatientList){

@@ -11,3 +11,9 @@ Outpatient	doctorvisit
 7	50
 Inpatient	tests doctorvisit 
 Outpatient	tests measurements 
+Inpatient	tests doctorvisit 
+Outpatient	tests measurements 
+Inpatient	tests doctorvisit 
+Outpatient	tests measurements 
+Inpatient	tests doctorvisit 
+Outpatient	tests measurements 

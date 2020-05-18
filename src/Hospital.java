@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Hospital {
-    private ArrayList<String> inputList;
-    private TextPatientDAO patientDAO;
-    private TextAdmissionDAO admissionDAO;
+    private final ArrayList<String> inputList;
+    private final TextPatientDAO patientDAO;
+    private final TextAdmissionDAO admissionDAO;
     private PrintWriter outFile = null;
 
+    /**
+     * Precondition: All files must be in right format. Double spaces mostly handled but I advice you to check for them
+     *          in case a couple has missed my sight.
+     * Hospital class arrange all operations between IAdmissionDAO and IPatientDAO and operate input commands.
+     * @param inputFileName is your input file name
+     */
     Hospital(String inputFileName){
         ReadFiles adminDocument = new ReadFiles(inputFileName);
         inputList = adminDocument.getListFormat();
@@ -24,6 +30,16 @@ public class Hospital {
         }
     }
 
+    /**
+     * Precondition: Commands written in input.txt has to be formatted correctly.
+     * List of commands is as below:
+     * -AddPatient space < patientID > space < name > space < surname > space < phone number > space < address >
+     * -RemovePatient  space < patient ID >
+     * -CreateAdmission space < AdmissionID > space < PatientID >
+     * -AddExamination space < AdmissionID > space < examination type > space <operation >
+     * -TotalCost space < AdmissionID >
+     * -ListPatients
+     */
     public void performCommands(){
         for(String command: inputList){
             String[] commandList = command.split(" ");
@@ -61,6 +77,10 @@ public class Hospital {
         }
     }
 
+    /**
+     * Post condition: Sorts all lists as requested and update them by overwriting those files.Then close all files.
+     *          In order to not face any missing data, this method has to be called from Main
+     */
     public void updateFiles(){
         ArrayList<Patient> finalPatients = patientDAO.getPatientList();
         ArrayList<Admission> finalAdmissions = admissionDAO.getAdmissions();
@@ -89,6 +109,13 @@ public class Hospital {
         admissionUpdated.close();
     }
 
+    /**
+     * Precondition:
+     * @param phone has to be 000-0000000 format otherwise will not be added
+     * @param address has to be given without stating "Address:" while adding patient in input.txt
+     * Post condition: Patient object is created with given information and added to patients list.
+     *                Send a feedback to output file stating the task is performed.
+     */
     private void addPatient(String patientID, String name, String surname, String phone, String address){
         if(phone.length() != 11){
             phone = "not-added";
@@ -100,6 +127,11 @@ public class Hospital {
         outFile.format("Patient %s %s added\n", patientID, name);
     }
 
+    /**
+     * Removed and deleted admissions of the patient with patientID
+     * @param patientID stated.
+     * Post condition: Send a feedback to output file stating the task is performed.
+     */
     private void removePatient(int patientID){
         Patient toRemove = patientDAO.getPatient(patientID);
         if(toRemove != null){
@@ -112,20 +144,40 @@ public class Hospital {
         }
     }
 
+    /**
+     * creates an empty admission with
+     * @param admissionID and
+     * @param patientID stated.
+     * Post condition: Send a feedback to output file stating the task is performed.
+     */
     private void createAdmission(int admissionID, int patientID){
         admissionDAO.createAdmission(admissionID, patientID);
         outFile.println("Admission " + admissionID + " created");
 
     }
 
+    /**
+     * Adds an Examination object using its decorator pattern inside the admissionDAO
+     * @param admissionID need to be created before
+     * @param type can be Inpatient or Outpatient
+     * @param operations will be checked inside the Admission object
+     */
     private void addExamination(int admissionID, String type, String[] operations){
         admissionDAO.addExamination(admissionID, type, operations);
         outFile.println(type + " examination added to admission " + admissionID);
     }
+
+    /**
+     * prints the operations and total cost of the patient in the output file
+     * @param admissionID of patient
+     */
     private void totalCost(int admissionID){
         outFile.println(admissionDAO.totalCost(admissionID));
     }
 
+    /**
+     * lists all patients alphabetically in the output file
+     */
     private void listPatients(){
         outFile.println("PatientList:");
         ArrayList<Patient> finalList = patientDAO.getPatientList();
@@ -136,7 +188,13 @@ public class Hospital {
         }
     }
 
-
+    /**
+     * helps cropping an array with indexes
+     * @param array to be cropped
+     * @param startIndex and
+     * @param endIndex needs to be regular indexes starting from zero
+     * @return that part of the given array as a whole
+     */
     private String[] cropArray(String[] array, int startIndex, int endIndex){
         String[] cropped = new String[endIndex - startIndex + 1];
         for(int i = 0; i < cropped.length; i++){

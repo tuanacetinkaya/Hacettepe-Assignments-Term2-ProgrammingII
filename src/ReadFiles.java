@@ -9,21 +9,30 @@ import java.util.Scanner;
  */
 public class ReadFiles {
 
-    private ArrayList<String> listFormat;
+    private ArrayList<String> listFormat; //file content transferred to list line by line
     private final String fileName;
+
     ReadFiles(String fileName){
         this.fileName = fileName;
     }
 
+    /**
+     * @return the file content in ArrayList<String> format
+     */
     public ArrayList<String> getListFormat(){
         this.listFormat = readFile();
         return this.listFormat;
     }
 
+    //in case you need to see the file content clearly
     public String toString(){
         return String.join("\n", listFormat);
     }
 
+    /**
+     * reads the given file and
+     * @return the ArrayList
+     */
     private ArrayList<String> readFile(){
         ArrayList<String> allLines = new ArrayList<String>();
         Scanner fileScan = null;
