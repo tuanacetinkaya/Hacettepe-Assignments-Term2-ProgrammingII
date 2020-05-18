@@ -71,7 +71,7 @@ public class Admission {
             description += content.getDescription() + content.getCost() + "$\n";
             totalCost += content.getCost();
         }
-        return "TotalCost for admission " + admissionID +
+        return "TotalCost for admission " + admissionID +"\n"+
                 description + "Total: " + totalCost + "$";
     }
 

@@ -3,13 +3,12 @@ import java.util.Objects;
 
 public class TextAdmissionDAO implements IAdmissionDAO {
 
-    private ArrayList<String> initialAdmissionList;
+    private final ArrayList<String> initialAdmissionList;
     private ArrayList<Admission> admissions;
 
     TextAdmissionDAO(){
 
-        //todo find a way to reach the wile without actual path
-        ReadFiles reader = new ReadFiles("src\\admission.txt");
+        ReadFiles reader = new ReadFiles("admission.txt");
         this.initialAdmissionList = reader.getListFormat();
         this.admissions = new ArrayList<Admission>();
         initializeAdmissions();
@@ -42,6 +41,13 @@ public class TextAdmissionDAO implements IAdmissionDAO {
 
     @Override
     public Admission createAdmission(int admissionID, int patientID) {
+        for(Admission admission: admissions){
+            if(admission.getPatientID() == patientID){
+                System.out.println("You already created an admission for patient " + patientID +
+                        "\n\tAdmission ID: " + admission.getAdmissionID());
+                return null;
+            }
+        }
         Admission newAdmission = new Admission(admissionID,patientID);
         admissions.add(newAdmission);
         return newAdmission;
@@ -96,5 +102,15 @@ public class TextAdmissionDAO implements IAdmissionDAO {
     @Override
     public ArrayList<Admission> getAdmissions() {
         return admissions;
+    }
+
+    public void removedPatientUpdate(int patientID){
+        for(Admission admission: admissions){
+            if(admission.getPatientID() == patientID){
+                admissions.remove(admission);
+                System.out.println("Admission of patient " + patientID +
+                        " removed because this patient has removed from the patient database");
+            }
+        }
     }
 }

@@ -8,8 +8,7 @@ public class TextPatientDAO implements IPatientDAO {
     private ArrayList<Patient> patients;
 
     TextPatientDAO(){
-        //todo find a way to reach the file without declaring the absolute path
-        ReadFiles patientFile = new ReadFiles("src\\patient.txt");
+        ReadFiles patientFile = new ReadFiles("patient.txt");
         initialPatientList = patientFile.getListFormat();
         this.patients = createPatients();
     }

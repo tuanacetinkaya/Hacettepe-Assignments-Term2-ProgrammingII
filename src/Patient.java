@@ -4,13 +4,16 @@ public class Patient {
     private String name;
     private String address;
     private String phone;
-
-    public Patient(String patientID, String nameAndSurname, String phone, String address) {
+    public Patient(String patientID, String name, String surname, String phone, String address){
         this.patientID = Integer.valueOf(patientID);
-        this.surname = nameAndSurname.split(" ")[1];
-        this.name = nameAndSurname.split(" ")[0];
+        this.surname = surname;
+        this.name = name;
         this.address = address.split(": ")[1];
         this.phone = phone;
+    }
+
+    public Patient(String patientID, String nameAndSurname, String phone, String address) {
+        this(patientID, nameAndSurname.split(" ")[0], nameAndSurname.split(" ")[1], phone,address);
     }
 
     public String toString(){
