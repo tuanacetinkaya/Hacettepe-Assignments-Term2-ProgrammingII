@@ -1,3 +1,5 @@
+package Assignment3;
+
 public class Imaging extends DecoratorExamine {
     Imaging(IExamination examination){
         super(examination);

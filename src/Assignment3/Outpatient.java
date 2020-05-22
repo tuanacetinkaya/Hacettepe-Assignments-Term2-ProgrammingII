@@ -1,3 +1,5 @@
+package Assignment3;
+
 public class Outpatient implements IExamination {
 
     @Override

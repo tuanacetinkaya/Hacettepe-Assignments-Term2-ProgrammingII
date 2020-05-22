@@ -1,3 +1,5 @@
+package Assignment3;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +12,7 @@ public class TextAdmissionDAO implements IAdmissionDAO {
 
     TextAdmissionDAO(){
 
-        ReadFiles reader = new ReadFiles("admission.txt"); //todo fix it
+        ReadFiles reader = new ReadFiles("Assignment3/admission.txt");
         this.initialAdmissionList = reader.getListFormat();
         this.admissions = new ArrayList<Admission>();
         initializeAdmissions();

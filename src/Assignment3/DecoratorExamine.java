@@ -1,3 +1,5 @@
+package Assignment3;
+
 public class DecoratorExamine implements IExamination {
 
     protected IExamination rootExamination;

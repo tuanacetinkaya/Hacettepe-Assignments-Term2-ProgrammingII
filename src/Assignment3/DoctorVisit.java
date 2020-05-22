@@ -1,3 +1,5 @@
+package Assignment3;
+
 public class DoctorVisit extends DecoratorExamine {
 
     DoctorVisit(IExamination examination) {

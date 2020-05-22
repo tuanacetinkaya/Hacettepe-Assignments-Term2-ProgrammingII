@@ -1,3 +1,5 @@
+package Assignment3;
+
 public class Test extends DecoratorExamine {
 
     Test(IExamination examination){ super(examination); }

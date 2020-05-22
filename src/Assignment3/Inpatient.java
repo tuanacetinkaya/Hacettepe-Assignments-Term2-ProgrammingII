@@ -1,3 +1,5 @@
+package Assignment3;
+
 public class Inpatient implements IExamination {
     @Override
     public int getCost() {

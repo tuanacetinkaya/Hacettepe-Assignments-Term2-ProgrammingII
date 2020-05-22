@@ -1,3 +1,5 @@
+package Assignment3;
+
 public class Patient{
     private int patientID;
     private String surname;

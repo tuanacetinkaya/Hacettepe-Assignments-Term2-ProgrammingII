@@ -1,3 +1,5 @@
+package Assignment3;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class Hospital {
         admissionDAO = new TextAdmissionDAO();
 
         try {
-            outFile = new PrintWriter("output.txt");
+            outFile = new PrintWriter("Assignment3/output.txt");
         } catch (FileNotFoundException e) {
             System.out.println("An error occured while creating the output file.\n" +
                     "\t tip: Please be sure you do not have any folder named output.txt");
@@ -90,8 +92,8 @@ public class Hospital {
         PrintWriter patientUpdated = null;
         PrintWriter admissionUpdated = null;
         try {
-            patientUpdated = new PrintWriter("patient.txt");
-            admissionUpdated = new PrintWriter("admission.txt");
+            patientUpdated = new PrintWriter("Assignment3/patient.txt");
+            admissionUpdated = new PrintWriter("Assignment3/admission.txt");
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred while updating patient and admission files");
             System.exit(0);

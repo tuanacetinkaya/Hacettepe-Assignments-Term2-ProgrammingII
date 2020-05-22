@@ -1,3 +1,5 @@
+package Assignment3;
+
 /**
  * This interface is the root of the Decorator Design Pattern and will not supply any further
  *      information in its implementations. This only provides a dynamic decoration mechanic.

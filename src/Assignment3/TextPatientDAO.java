@@ -1,3 +1,5 @@
+package Assignment3;
+
 import java.util.ArrayList;
 
 /**
@@ -8,7 +10,7 @@ public class TextPatientDAO implements IPatientDAO {
     private ArrayList<Patient> patients;
 
     TextPatientDAO(){
-        ReadFiles patientFile = new ReadFiles("patient.txt"); //todo fix it
+        ReadFiles patientFile = new ReadFiles("Assignment3/patient.txt");
         initialPatientList = patientFile.getListFormat();
         this.patients = createPatients();
     }
