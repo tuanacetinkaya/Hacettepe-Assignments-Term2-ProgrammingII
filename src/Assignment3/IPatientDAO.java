@@ -28,7 +28,7 @@ public interface IPatientDAO {
 
     /**
      * to reach the list more efficiently
-     * @return the patient list in ArrayList format
+     * @return the patient list in Quiz4.ArrayList format
      */
     ArrayList<Patient> getPatientList();
 
