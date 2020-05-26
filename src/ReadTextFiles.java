@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class ReadTextFiles {
-    private final String[] listFormat; //file content transferred to list line by line
+    private final int[] listFormat; //file content transferred to list line by line
     private final String fileName;
 
     ReadTextFiles(String fileName){
@@ -15,41 +15,50 @@ public class ReadTextFiles {
     }
 
     /**
-     * @return the file content in String[] format
+     * @return the file content in int[] format
      */
-    public String[] getListFormat(){
+    public int[] getListFormat(){
         return this.listFormat;
     }
 
     //in case you need to see the file content clearly
     public String toString(){
-        return String.join("\n", listFormat);
+        StringBuilder list = new StringBuilder();
+        for(int element: listFormat){
+            list.append(element + " ");
+        }
+        return list.toString();
     }
 
     /**
      * reads the given file and
      * @return the Array
      */
-    private String[] readFile(){
-        String[] allLines = null;
+    private int[] readFile(){
+        int[] allList = null;
         Scanner fileScan = null;
         try {
-            int length = Files.readAllLines(Paths.get(fileName)).size();
-            allLines = new String[length];
+
             File theFile = new File(fileName);
             fileScan = new Scanner(theFile);
+            int length = 0;
+            while (fileScan.hasNextInt()){
+                fileScan.nextInt();
+                length++;
+            }
+            allList = new int[length];
+            fileScan = new Scanner(theFile);
+
         } catch (FileNotFoundException e) {
             System.out.println("This file cannot be opened: " + fileName);
             System.exit(0);
-        }catch (IOException i){
-            System.out.println("Check the file name again!");
-            System.exit(0);
         }
         int i = 0;
-        while (fileScan.hasNextLine()){
-            allLines[i++] = (fileScan.nextLine());
+        while (fileScan.hasNextInt()){
+            allList[i] = fileScan.nextInt();
+            i++;
         }
         fileScan.close();
-        return allLines;
+        return allList;
     }
 }
