@@ -33,6 +33,10 @@ public class ReadTextFile {
         Scanner fileScan = null;
         try {
             int length = Files.readAllLines(Paths.get(fileName)).size();
+            if(length == 0){
+                System.out.println("The file is empty. Please check and try again.");
+                System.exit(0);
+            }
             allLines = new String[length];
             File theFile = new File(fileName);
             fileScan = new Scanner(theFile);

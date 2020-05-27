@@ -10,10 +10,15 @@ public class Main {
 
         ReadTextFile que = new ReadTextFile("src\\queue.txt");
         Queue tryout = new Queue();
+
+
         tryout.initialize(integerConversion(que.getListFormat()[0]));
 
         System.out.println(tryout);
-        System.out.println(tryout.getSize());
+        System.out.println(tryout.sort());
+        System.out.println(tryout);
+        System.out.println(tryout.getTail());
+
 
     }
 
