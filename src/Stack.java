@@ -17,6 +17,10 @@ public class Stack {
         return item;
     }
 
+    public Node push(int value){
+        return push(new Node(value));
+    }
+
     public Node pop(){
         if(!isEmpty()) {
             Node popped = top;
@@ -73,11 +77,83 @@ public class Stack {
     public String toString(){
         StringBuilder stack = new StringBuilder();
         Node index = top;
-        for(int i = 0; i < size; i++){
-            stack.append(index.getValue() + " ");
-            index = index.getNextNode();
+        if(top != null){
+            for (int i = 0; i < size; i++) {
+                stack.append(index.getValue()).append(" ");
+                index = index.getNextNode();
+            }
+            return stack.toString().trim(); //trim to get rid of the last empty space
         }
-        return stack.toString().trim(); //trim to get rid of the last empty space
+        return "";
+    }
+
+    /**
+     * this method uses bubble sort technique
+     * @return the head of the sorted queue
+     */
+    public Node sort(){
+        //tale will be updated at the end of the sorting process
+        Node beforeNode;
+        Node biggest;
+        Node restOfTheList;
+
+        if(top == null){
+            System.out.println("The queue is empty, sort process cannot be applied");
+        }
+
+        for(int i = 0; i < size -1; i++){
+            biggest = beforeNode = top;
+            for (int limit = 0; limit < size - i -1 ; limit++) {
+                //has to run size-1 times because it compares two items at a time
+                // -think the process as you are on a rope between the nodes-
+                if (biggest.getNextNode().getValue() >= biggest.getValue()) {
+                    beforeNode = biggest;
+                    biggest = biggest.getNextNode();
+                } else {
+                    restOfTheList = biggest.getNextNode().getNextNode(); //holding the rest of the list safe
+                    if(beforeNode != biggest){
+                        beforeNode.setNextNode(biggest.getNextNode());
+                        beforeNode.getNextNode().setNextNode(biggest);
+                        biggest.setNextNode(restOfTheList);
+                        beforeNode = beforeNode.getNextNode();
+                    }else {
+                        //means before is equal to the biggest and it is the beginning -the head- of the queue
+                        beforeNode = biggest.getNextNode();
+                        biggest.setNextNode(restOfTheList);
+                        beforeNode.setNextNode(biggest);
+                        top = beforeNode; //update the head of the list
+                    }
+
+                    //switched the place of the smaller value and the biggest node so far.
+                }
+            }
+        }
+        return top;
+    }
+
+    public void removeBiggerThan(int number){
+        Node index = top;
+        int fixedSize = size;
+
+        for(int i = 0; i< fixedSize-1 ; i++){
+            if(index.getNextNode() != null) {
+                if (index.getNextNode().getValue() > number) {
+                    //next node now assigned to the node after and the actual next node lost it's reference,
+                    // will be collected by garbage collector
+                    //remember edge case: if there are 2 elements in the list, then the node after will be null and the code will not break
+                    index.setNextNode(index.getNextNode().getNextNode());
+                    size--; //size update
+                }else {
+                    index = index.getNextNode();
+                }
+            }
+        }
+        //I check the head last (after getting rid of every other match case in list),
+        // to avoid the second element match case which will force us to remove the head element again.
+        if(top.getValue() > number){
+            top = top.getNextNode();
+            size--;
+        }
     }
 
 }

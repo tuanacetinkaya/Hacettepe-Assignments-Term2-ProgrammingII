@@ -8,27 +8,9 @@
 public class Main {
     public static void main(String[] args){
 
-        ReadTextFile que = new ReadTextFile("src\\queue.txt");
-        Queue tryout = new Queue();
+        OperationManager stackQueueManager = new OperationManager("src\\command.txt");
+        stackQueueManager.performCommands();
+//        stackQueueManager.updateFiles();
 
-
-        tryout.initialize(integerConversion(que.getListFormat()[0]));
-
-        System.out.println(tryout);
-        System.out.println(tryout.sort());
-        System.out.println(tryout);
-        System.out.println(tryout.getTail());
-
-
-    }
-
-    public static int[] integerConversion(String list){
-        String[] split = list.split(" ");
-        int[] converted = new int[split.length];
-        int i = 0;
-        for(String val: split){
-            converted[i++] = Integer.parseInt(val);
-        }
-        return converted;
     }
 }

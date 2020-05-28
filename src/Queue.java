@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.NoSuchElementException;
+
 public class Queue {
     private Node head;
     private Node tail;
@@ -42,7 +46,9 @@ public class Queue {
 
     public void removeBiggerThan(int number){
         Node index = head;
-        for(int i = 0; i< size; i++){
+        int fixedSize = size;
+
+        for(int i = 0; i< fixedSize-1 ; i++){
             if(index.getNextNode() != null) {
                 if (index.getNextNode().getValue() > number) {
                     //next node now assigned to the node after and the actual next node lost it's reference,
@@ -50,6 +56,8 @@ public class Queue {
                     //remember edge case: if there are 2 elements in the list, then the node after will be null and the code will not break
                     index.setNextNode(index.getNextNode().getNextNode());
                     size--; //size update
+                }else {
+                    index = index.getNextNode();
                 }
             }
         }
@@ -77,13 +85,17 @@ public class Queue {
 
     @Override
     public String toString(){
-        StringBuilder queueString = new StringBuilder();
-        Node current = head;
-        for(int i = 0; i< size; i++) {
-            queueString.append(current.getValue()).append(" ");
-            current = current.getNextNode();
+        if(!isEmpty()){
+            StringBuilder queueString = new StringBuilder();
+            Node current = head;
+            for (int i = 0; i < size; i++) {
+                queueString.append(current.getValue()).append(" ");
+                current = current.getNextNode();
+            }
+            return queueString.toString().trim(); //trim() to get rid of the last empty space
+        }else {
+            return "Queue Empty";
         }
-        return queueString.toString().trim(); //trim() to get rid of the last empty space
     }
 
     public int getSize() {
@@ -146,4 +158,5 @@ public class Queue {
         }
         return head;
     }
+
 }
