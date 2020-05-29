@@ -1,3 +1,5 @@
+package Assignment4;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,8 +17,8 @@ public class OperationManager {
      */
     public OperationManager(String commandFileName) {
         ReadTextFile commandCenter = new ReadTextFile(commandFileName);
-        ReadTextFile stackInitialFile = new ReadTextFile("stack.txt");
-        ReadTextFile queueInitialFile = new ReadTextFile("queue.txt");
+        ReadTextFile stackInitialFile = new ReadTextFile("Assignment4/stack.txt");
+        ReadTextFile queueInitialFile = new ReadTextFile("Assignment4/queue.txt");
 
         commands = commandCenter.getListFormat();
 
@@ -45,8 +47,8 @@ public class OperationManager {
         PrintWriter queueFile;
         PrintWriter stackFile;
         try {
-            queueFile = new PrintWriter("queue.txt");
-            stackFile = new PrintWriter("stack.txt");
+            queueFile = new PrintWriter("Assignment4/queue.txt");
+            stackFile = new PrintWriter("Assignment4/stack.txt");
         } catch (FileNotFoundException e) {
             System.out.println("Couldn't find queue.txt or stack.txt");
             return;
@@ -67,8 +69,8 @@ public class OperationManager {
         PrintWriter queueOut = null;
 
         try {
-            stackOut = new PrintWriter("stackOut.txt");
-            queueOut = new PrintWriter("queueOut.txt");
+            stackOut = new PrintWriter("Assignment4/stackOut.txt");
+            queueOut = new PrintWriter("Assignment4/queueOut.txt");
         } catch (FileNotFoundException e) {
             System.out.println("Failed to create output files");
             System.exit(0);
