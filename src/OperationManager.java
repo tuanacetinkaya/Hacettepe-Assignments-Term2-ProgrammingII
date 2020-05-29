@@ -1,4 +1,3 @@
-
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -9,6 +8,11 @@ public class OperationManager {
     private Stack stack;
     private Queue queue;
 
+    /**
+     * Main operation center. Stack and Queue will be held here.
+     * <tt>commands</tt> is the String array to keep and execute all commands easily.
+     * @param commandFileName is the file given by the user to read the commands
+     */
     public OperationManager(String commandFileName) {
         ReadTextFile commandCenter = new ReadTextFile(commandFileName);
         ReadTextFile stackInitialFile = new ReadTextFile("stack.txt");
@@ -23,6 +27,7 @@ public class OperationManager {
         queue.initialize(integerConversion(queueInitialFile.getListFormat()[0]));
 
     }
+    //helper method to convert the read values of stack and queue to integer array
     private int[] integerConversion(String list){
         String[] split = list.split(" ");
         int[] converted = new int[split.length];
@@ -33,6 +38,9 @@ public class OperationManager {
         return converted;
     }
 
+    /**
+     * updates the queue.txt and stack.txt to their latest version
+     */
     public void updateFiles(){
         PrintWriter queueFile;
         PrintWriter stackFile;
@@ -50,6 +58,9 @@ public class OperationManager {
         stackFile.close();
     }
 
+    /**
+     * Read the <tt>commands</tt> and execute them, write the operation and the result to output files: queueOut.txt and stackOut.txt
+     */
     public void performCommands(){
 
         PrintWriter stackOut = null;
@@ -82,7 +93,7 @@ public class OperationManager {
         queueOut.close();
     }
 
-
+    //stack operations
     private void stackPerform(String[] todo, PrintWriter outFile){
         switch (todo[1].trim()){
             case ("removeGreater"):
@@ -136,6 +147,7 @@ public class OperationManager {
 
     }
 
+    //queue operations
     private void queuePerform(String[] todo, PrintWriter outFile){
         switch (todo[1].trim()){
             case ("removeGreater"):
@@ -188,6 +200,12 @@ public class OperationManager {
 
     }
 
+    /**
+     * calculates the distance of each element and add them up
+     * @param headNode is the list to perform since this operation is common for stack and queue, only the head node will be enough
+     * @return the distance with a formula such as n1 is the first node and nE is the last node:
+     *          distance = |n1 - n2| + |n1- n3| .. |n1 - nE| + |n2 - n3| + ...
+     */
     private int getDistance(Node headNode){
         Node hold = headNode;
         Node move = headNode;
@@ -243,6 +261,11 @@ public class OperationManager {
         }
     }
 
+    /**
+     * @param head is the first node since implementation for stack and queue is common
+     * @param size is the total number of items in list
+     * @return number of the different values in list
+     */
     public int distinctElements(Node head, int size){
         ArrayList<Integer> distinctValues = new ArrayList<>();
         Node index = head;
@@ -255,10 +278,10 @@ public class OperationManager {
         return distinctValues.size();
     }
 
+    //getters and setters in case of need
     public Stack getStack() {
         return stack;
     }
-
     public Queue getQueue() {
         return queue;
     }

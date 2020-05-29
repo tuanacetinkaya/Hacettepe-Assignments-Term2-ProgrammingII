@@ -7,6 +7,10 @@ public class ReadTextFile {
     private final String[] listFormat; //file content transferred to list line by line
     private final String fileName;
 
+    /**
+     * Reads the spesific text file and return the content inside a String array.
+     * @param fileName is the file to be read
+     */
     ReadTextFile(String fileName){
         this.fileName = fileName;
         this.listFormat = readFile();

@@ -1,15 +1,27 @@
 
 public class Queue {
+
     private Node head;
     private Node tail;
     private int size;
     private final int MAX_CAPACITY = 100;
 
+    /**
+     * Queue implementation with LinedList data structure.
+     *  <tt>head</tt> is the top of the queue used to remove items
+     *  <tt>tail</tt> is the bottom used to add items
+     *  size is the total elements in list.
+     */
     Queue(){
         head = tail = null;
         size = 0;
     }
 
+    /**
+     * adds to the end of the queue
+     * @param n Node to be added
+     * @return true if the add operation succeed.
+     */
     public boolean add(Node n){
         if(size <= MAX_CAPACITY) {
             if (isEmpty()) {
@@ -25,10 +37,15 @@ public class Queue {
         return false;
     }
 
+    //helper method to add integer values more easily and stay out of the chaos.
     public boolean add(int value){
         return add(new Node(value));
     }
 
+    /**
+     * remove items from the beginning of the queue
+     * @return the Node removed
+     */
     public Node remove(){
         if(!isEmpty()){
             Node queued = new Node(head.getValue());
@@ -42,39 +59,55 @@ public class Queue {
         }
     }
 
+    /**
+     * removes any number bigger than <tt>number</tt>
+     * @param number is the limit
+     */
     public void removeBiggerThan(int number){
         Node index = head;
-        int fixedSize = size;
+        int fixedSize = size; //since size will continuously change, we need to keep the beginning size as a constant
 
-        for(int i = 0; i< fixedSize-1 ; i++){
-            if(index.getNextNode() != null) {
-                if (index.getNextNode().getValue() > number) {
-                    //next node now assigned to the node after and the actual next node lost it's reference,
-                    // will be collected by garbage collector
-                    //remember edge case: if there are 2 elements in the list, then the node after will be null and the code will not break
-                    index.setNextNode(index.getNextNode().getNextNode());
-                    size--; //size update
-                }else {
-                    index = index.getNextNode();
+        //will not try if the stack is empty
+        if(fixedSize > 0){
+            for (int i = 0; i < fixedSize - 1; i++) {
+                if (index.getNextNode() != null) {
+                    if (index.getNextNode().getValue() > number) {
+                        //next node now assigned to the node after and the actual next node lost it's reference,
+                        // will be collected by garbage collector
+                        //remember edge case: if there are 2 elements in the list, then the node after will be null and the code will not break
+                        index.setNextNode(index.getNextNode().getNextNode());
+                        size--; //size update
+                    } else {
+                        index = index.getNextNode();
+                    }
                 }
             }
-        }
-        //I check the head last (after getting rid of every other match case in list),
-        // to avoid the second element match case which will force us to remove the head element again.
-        if(head.getValue() > number){
-            remove();
+            //I check the head last (after getting rid of every other match case in list),
+            // to avoid the second element match case which will force us to remove the head element again.
+            if (head.getValue() > number) {
+                remove();
+            }
         }
     }
 
-
+    /**
+     * @return the first element in queue without removing it
+     */
     public Node peek(){
         return head;
     }
 
+    /**
+     * @return true if the queue is empty
+     */
     public boolean isEmpty(){
         return head == null;
     }
 
+    /**
+     * initialize the queue from the integer array of the initial file.
+     * @param queueFileList int array form of the queue ordered from the head to tail
+     */
     public void initialize(int[] queueFileList){
         for (int value : queueFileList) {
             add(new Node(value));
@@ -96,17 +129,12 @@ public class Queue {
         }
     }
 
-    public int getSize() {
-        return size;
-    }
+    //getters and setters
+    public int getSize() { return size; }
 
-    public Node getHead() {
-        return head;
-    }
+    public Node getHead() { return head; }
 
-    public Node getTail() {
-        return tail;
-    }
+    public Node getTail() { return tail; }
 
     /**
      * this method uses bubble sort technique

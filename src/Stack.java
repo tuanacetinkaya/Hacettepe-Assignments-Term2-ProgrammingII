@@ -5,11 +5,22 @@ public class Stack {
     private final int MAX_CAPACITY = 100;
 
 
+    /**
+     * Stack implementation with LinkedList data structure
+     * <tt>top</tt> is the first item in stack
+     * Stack removes from and adds elements to the top of the list
+     * <tt>size</tt> is the total elements in list
+     */
     Stack(){
         top = null;
         size = 0;
     }
 
+    /**
+     * pushes the <tt>item/tt> to the top of the stack and makes it <tt>top</tt> element.
+      * @param item to be added to stack
+     * @return true if the push operation succeed
+     */
     public boolean push(Node item){
         if(size <= MAX_CAPACITY){
             Node second = top;
@@ -22,10 +33,15 @@ public class Stack {
         return false;
     }
 
+    //helper method to push integer values directly to stack
     public boolean push(int value){
         return push(new Node(value));
     }
 
+    /**
+     * Removes the top element from the stack and return it's value
+     * @return the value of the removed Node
+     */
     public Node pop(){
         if(!isEmpty()) {
             Node popped = top;
@@ -37,15 +53,24 @@ public class Stack {
         return null;
     }
 
+    /**
+     * @return the top node without removing it
+     */
     public Node peek(){
         return top;
     }
 
+    /**
+     * @return true if the stack is empty
+     */
     public boolean isEmpty(){
         return top == null;
     }
 
-
+    /**
+     * initialize the stack by reading the values on the given array
+     * @param fileArray integer array of the initial file ordered from the top element to the rest of the stack
+     */
     public void initialize(int[] fileArray){
         if(fileArray == null){
             System.out.println("Stack File Array Does Not Exist");
@@ -69,17 +94,12 @@ public class Stack {
         }
     }
 
-    public Node getTop() {
-        return top;
-    }
+    //getters and setters
+    public Node getTop() { return top; }
 
-    public void setTop(Node top) {
-        this.top = top;
-    }
+    public void setTop(Node top) { this.top = top; }
 
-    public int getSize() {
-        return size;
-    }
+    public int getSize() { return size; }
 
     public String toString(){
         StringBuilder stack = new StringBuilder();
@@ -138,28 +158,35 @@ public class Stack {
         return top;
     }
 
+    /**
+     * removes any number bigger than <tt>number</tt>
+     * @param number is the limit
+     */
     public void removeBiggerThan(int number){
         Node index = top;
-        int fixedSize = size;
+        int fixedSize = size; //since size will continuously change, we need to keep the beginning size as a constant
 
-        for(int i = 0; i< fixedSize-1 ; i++){
-            if(index.getNextNode() != null) {
-                if (index.getNextNode().getValue() > number) {
-                    //next node now assigned to the node after and the actual next node lost it's reference,
-                    // will be collected by garbage collector
-                    //remember edge case: if there are 2 elements in the list, then the node after will be null and the code will not break
-                    index.setNextNode(index.getNextNode().getNextNode());
-                    size--; //size update
-                }else {
-                    index = index.getNextNode();
+        //will not try if the stack is empty
+        if(fixedSize > 0){
+            for (int i = 0; i < fixedSize - 1; i++) {
+                if (index.getNextNode() != null) {
+                    if (index.getNextNode().getValue() > number) {
+                        //next node now assigned to the node after and the actual next node lost it's reference,
+                        // will be collected by garbage collector
+                        //remember edge case: if there are 2 elements in the list, then the node after will be null and the code will not break
+                        index.setNextNode(index.getNextNode().getNextNode());
+                        size--; //size update
+                    } else {
+                        index = index.getNextNode();
+                    }
                 }
             }
-        }
-        //I check the head last (after getting rid of every other match case in list),
-        // to avoid the second element match case which will force us to remove the head element again.
-        if(top.getValue() > number){
-            top = top.getNextNode();
-            size--;
+            //I check the head last (after getting rid of every other match case in list),
+            // to avoid the second element match case which will force us to remove the head element again.
+            if (top.getValue() > number) {
+                top = top.getNextNode();
+                size--;
+            }
         }
     }
 

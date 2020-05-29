@@ -1,4 +1,8 @@
 public class Node {
+    /**
+     * Basic Node implementation for linked list. Only pointing the next Node
+     * and any unassigned Nodes will have the value -1.
+     */
 
     private int value;
     private Node nextNode;
