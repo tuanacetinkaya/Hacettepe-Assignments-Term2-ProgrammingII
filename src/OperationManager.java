@@ -1,4 +1,4 @@
-import java.io.BufferedWriter;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ public class OperationManager {
 
     public OperationManager(String commandFileName) {
         ReadTextFile commandCenter = new ReadTextFile(commandFileName);
-        ReadTextFile stackInitialFile = new ReadTextFile("src\\stack.txt");//todo fix
-        ReadTextFile queueInitialFile = new ReadTextFile("src\\queue.txt");//todo fix
+        ReadTextFile stackInitialFile = new ReadTextFile("stack.txt");
+        ReadTextFile queueInitialFile = new ReadTextFile("queue.txt");
 
         commands = commandCenter.getListFormat();
 
@@ -45,6 +45,9 @@ public class OperationManager {
         }
         queueFile.println(queue.toString());
         stackFile.println(stack.toString());
+
+        queueFile.close();
+        stackFile.close();
     }
 
     public void performCommands(){
@@ -188,14 +191,15 @@ public class OperationManager {
 
     private int getDistance(Node headNode){
         Node hold = headNode;
-        Node move;
+        Node move = headNode;
         int distance = 0;
         for(int i = 0; i < stack.getSize()-1; i++){
-            hold = hold.getNextNode();
-            for(int j = 0; j < stack.getSize()-1; j++){
-                move = hold.getNextNode();
+            for(int j = 0; j < stack.getSize()-i-1; j++){
+                move = move.getNextNode();
                 distance += Math.abs(hold.getValue() - move.getValue());
             }
+            hold = hold.getNextNode();
+            move = hold;
         }
         return distance;
     }

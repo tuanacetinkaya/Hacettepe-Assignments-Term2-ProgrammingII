@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.NoSuchElementException;
 
 public class Queue {
     private Node head;

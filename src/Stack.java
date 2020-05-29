@@ -1,4 +1,3 @@
-import com.sun.istack.internal.NotNull;
 
 public class Stack {
     private Node top;
