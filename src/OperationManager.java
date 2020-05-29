@@ -87,7 +87,6 @@ public class OperationManager {
         switch (todo[1].trim()){
             case ("removeGreater"):
                 stack.removeBiggerThan(Integer.parseInt(todo[2]));
-                //todo might change
                 outFile.println("After removeGreater " + todo[2] + ":");
                 outFile.println(stack);
                 break;

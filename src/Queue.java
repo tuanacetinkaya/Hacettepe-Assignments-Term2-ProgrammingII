@@ -3,6 +3,7 @@ public class Queue {
     private Node head;
     private Node tail;
     private int size;
+    private final int MAX_CAPACITY = 100;
 
     Queue(){
         head = tail = null;
@@ -10,7 +11,7 @@ public class Queue {
     }
 
     public boolean add(Node n){
-        if(size < 100) {
+        if(size <= MAX_CAPACITY) {
             if (isEmpty()) {
                 head = tail = n;
             } else {
@@ -20,7 +21,7 @@ public class Queue {
             size++;
             return true;
         }
-        System.out.println("Queue has reached the maximum size, cannot add more values");
+        System.out.println("Queue has reached the maximum size. Cannot add more values");
         return false;
     }
 

@@ -2,21 +2,27 @@
 public class Stack {
     private Node top;
     private int size;
+    private final int MAX_CAPACITY = 100;
+
 
     Stack(){
         top = null;
         size = 0;
     }
 
-    public Node push(Node item){
-        Node second = top;
-        top = item;
-        top.setNextNode(second);
-        size++;
-        return item;
+    public boolean push(Node item){
+        if(size <= MAX_CAPACITY){
+            Node second = top;
+            top = item;
+            top.setNextNode(second);
+            size++;
+            return true;
+        }
+        System.out.println("Stack has reached the maximum size. Cannot add more values");
+        return false;
     }
 
-    public Node push(int value){
+    public boolean push(int value){
         return push(new Node(value));
     }
 
@@ -50,14 +56,16 @@ public class Stack {
             return;
         }
 
-        top = new Node(fileArray[0]);
-        size++;
-
-        Node index = top;
-        for (int i = 1; i< fileArray.length ; i++) {
-            index.setNextNode(new Node(fileArray[i]));
-            index = index.getNextNode();
+        if(fileArray.length <= MAX_CAPACITY){
+            top = new Node(fileArray[0]);
             size++;
+
+            Node index = top;
+            for (int i = 1; i < fileArray.length; i++) {
+                index.setNextNode(new Node(fileArray[i]));
+                index = index.getNextNode();
+                size++;
+            }
         }
     }
 
