@@ -1,5 +1,7 @@
 //package Assignment4;
-//
+//old version of Operations since I find out searching through stack and queue is illegal
+// -> I deleted the Stack and Queue methods of sort and removeBiggerThan so this class is useless, but its good to have it here since
+// it's a LinkedList implementation of sorting and doing operations.
 //import java.io.FileNotFoundException;
 //import java.io.PrintWriter;
 //import java.util.ArrayList;

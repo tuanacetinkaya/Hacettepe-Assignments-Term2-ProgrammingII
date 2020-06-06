@@ -125,7 +125,7 @@ public class Operations {
                 break;
 
             case ("reverse"):
-                reverse(Integer.parseInt(todo[2]), stack.getSize(), stack.getTop());
+                stack = reverse(Integer.parseInt(todo[2]), stack);
                 outFile.println("After reverse " + todo[2] + ":");
                 outFile.println(stack);
                 break;
@@ -178,7 +178,7 @@ public class Operations {
                 break;
 
             case ("reverse"):
-                reverse(Integer.parseInt(todo[2]), queue.getSize(), queue.getHead());
+                queue = reverse(Integer.parseInt(todo[2]), queue);
                 outFile.println("After reverse " + todo[2] + ":");
                 outFile.println(queue);
                 break;
@@ -200,47 +200,6 @@ public class Operations {
 
     }
 
-
-
-    /**
-     * Reverse the first part of the list if the number given is no greater than the size.
-     * Quick note: It might seem like we lost the tail on queue when we use the same method for stack and queue
-     *      but the the method does not change the position of the nodes just mess with the values, so the head and the
-     *      tail is still the same nodes with different values.
-     * @param numberOfElements to reverse from the beginning of the list
-     * @return the head of the reversed list if the number is smaller. return null otherwise
-     */
-    private Node reverse(int numberOfElements, int size, Node head){
-
-        if(numberOfElements <= size && numberOfElements > 0){
-            //fill the array with the values to reverse
-            Node index = head;
-            int[] array = new int[numberOfElements];
-            for (int i = 0; i < numberOfElements; i++) {
-                array[i] = index.getValue();
-                index = index.getNextNode();
-            }
-
-            //reverse operation
-            for (int j = 0; j < array.length / 2; j++) {
-                int temp = array[j];
-                array[j] = array[array.length - j - 1];
-                array[array.length - j - 1] = temp;
-            }
-
-            //refresh the first <<tt>>numberOfElements<</tt>> element's value and update with the reversed version
-            Node refresh = head;
-            for (int k = 0; k < numberOfElements; k++) {
-                refresh.setValue(array[k]);
-                refresh = refresh.getNextNode();
-            }
-            return head;
-
-        }else {
-            System.out.println("Please enter a value between one and the total size of the list for reverse operation.");
-            return null;
-        }
-    }
 
     /**
      * @param head is the first node since implementation for stack and queue is common
@@ -270,19 +229,25 @@ public class Operations {
 
     private Stack removeBiggerThan(int number, Stack stack){
         Stack helperStack = new Stack();
-        Stack finalStack = new Stack();
-        Node iterate = stack.getTop();
+        int initialSize = stack.getSize();
 
-        for(int i = 0; i< stack.getSize(); i++){
-            if(iterate.getValue() <= number){
-                helperStack.push(iterate);
+        if(stack.isEmpty()){
+            System.out.println("Stack is empty");
+            return null;
+        }
+
+        for(int i = 0; i< initialSize; i++){
+            if(stack.peek().getValue() <= number){
+                helperStack.push(stack.pop());
+            }else{
+                stack.pop();
             }
         }
-
-        for (int j = 0; j < helperStack.getSize(); j++){
-            finalStack.push(helperStack.pop());
+        int finalSize = helperStack.getSize();
+        for (int j = 0; j < finalSize; j++){
+            stack.push(helperStack.pop());
         }
-        return finalStack;
+        return stack;
     }
 
     private Queue removeBiggerThan(int number, Queue queue){
@@ -333,7 +298,7 @@ public class Operations {
     }
 
     private int calculateDistance(Queue queue){
-        Stack helperStack= new Stack();
+        Queue helperQueue= new Queue();
         Node hold;
         Node iterator;
         int distance = 0;
@@ -342,24 +307,80 @@ public class Operations {
         //greater for loop has to be performed by the initial size of the list
         // since we will continue to popping elements and shrinking size.
         for(int i = 0; i< initialSize; i++){
-            //hold the tail and calculate the distance according to that
-            hold = queue.getTail();
+            //hold the head and calculate the distance according to that
+            hold = queue.getHead();
             iterator = queue.peek();
             //scan the whole queue calculating the distance for the first element
             for(int j = 0; j< queue.getSize()-1; j++){
                 distance += Math.abs(iterator.getValue() - hold.getValue());
                 iterator = iterator.getNextNode();
             }
-            //get rid of the last element so we can continue the same operation for each element on the queue
-            helperStack.push(queue.remove());
+            //get rid of the first element so we can continue the same operation for each element on the queue
+            helperQueue.add(queue.remove()); //added head to the queue
         }
 
         //return the queue to it's initial position
+        Node reader = helperQueue.getHead();
         for(int k = 0; k < initialSize; k++){
-            queue.push(helperQueue.remove());
+            queue.add(reader);
+            reader = reader.getNextNode();
         }
         return distance;
     }
+
+
+    /**
+     * Reverse the first part of the list if the number given is no greater than the size.
+     * Implementation directly reverse Stack since it's natural and use integer array for Queue.
+     * @param numberOfElements to reverse from the beginning of the list
+     * @param stack or queue is the list to operate
+     * @return the reversed list if the number is smaller. return null otherwise
+     */
+    private Stack reverse(int numberOfElements, Stack stack){
+
+        int[] reverseList = new int[numberOfElements];
+        if(numberOfElements <= stack.getSize()){
+            for(int i = 0; i < numberOfElements; i++){
+                reverseList[i] = stack.pop().getValue();
+            }
+            for(int i = 0; i < numberOfElements; i++){
+                stack.push(reverseList[i]);
+            }
+            return stack;
+
+        }else {
+            System.out.println("Please enter a value between one and the total size of the list for reverse operation.");
+            return null;
+        }
+    }
+    private Queue reverse(int numberOfElements, Queue queue){
+        int initialSize = queue.getSize();
+        int[] elementsToReverse = new int[numberOfElements];
+        int[] keepOrder = new int[initialSize - numberOfElements];
+
+        if(numberOfElements <= initialSize){
+            for(int j = 0; j < numberOfElements; j++){
+                elementsToReverse[numberOfElements- j -1] = queue.remove().getValue();
+            }
+            for(int i = 0; i < initialSize - numberOfElements; i++){
+                keepOrder[i] = queue.remove().getValue();
+            }
+
+            for(int k = 0; k < numberOfElements; k++){
+                queue.add(elementsToReverse[k]);
+            }
+            for(int i = 0; i < initialSize - numberOfElements; i++){
+                queue.add(keepOrder[i]);
+            }
+
+            return queue;
+
+        }else {
+            System.out.println("Please enter a value between one and the total size of the list for reverse operation.");
+            return null;
+        }
+    }
+
 
 
 }
