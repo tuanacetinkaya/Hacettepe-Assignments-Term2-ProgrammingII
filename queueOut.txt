@@ -1,0 +1,8 @@
+After removeGreater 60:
+12 34 54 5 12 2 4 6 32 2 21 23 23 34
+After calculateDistance:
+Total distance=1362
+After addOrRemove -1:
+Queue Empty
+After reverse 5:
+Queue Empty

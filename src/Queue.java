@@ -1,5 +1,3 @@
-package Assignment4;
-
 public class Queue {
 
     private Node head;
@@ -57,37 +55,6 @@ public class Queue {
         else{
             System.out.println("The queue is empty, remove operation has failed!");
             return null;
-        }
-    }
-
-    /**
-     * removes any number bigger than <tt>number</tt>
-     * @param number is the limit
-     */
-    public void removeBiggerThan(int number){
-        Node index = head;
-        int fixedSize = size; //since size will continuously change, we need to keep the beginning size as a constant
-
-        //will not try if the stack is empty
-        if(fixedSize > 0){
-            for (int i = 0; i < fixedSize - 1; i++) {
-                if (index.getNextNode() != null) {
-                    if (index.getNextNode().getValue() > number) {
-                        //next node now assigned to the node after and the actual next node lost it's reference,
-                        // will be collected by garbage collector
-                        //remember edge case: if there are 2 elements in the list, then the node after will be null and the code will not break
-                        index.setNextNode(index.getNextNode().getNextNode());
-                        size--; //size update
-                    } else {
-                        index = index.getNextNode();
-                    }
-                }
-            }
-            //I check the head last (after getting rid of every other match case in list),
-            // to avoid the second element match case which will force us to remove the head element again.
-            if (head.getValue() > number) {
-                remove();
-            }
         }
     }
 

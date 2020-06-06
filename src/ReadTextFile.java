@@ -1,5 +1,3 @@
-package Assignment4;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,7 +23,7 @@ public class ReadTextFile {
         return this.listFormat;
     }
 
-    //in case you need to see the file content clearly todo
+    //in case you need to see the file content clearly
     public String toString(){
         return String.join("\n", listFormat);
     }

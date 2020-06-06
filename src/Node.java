@@ -1,5 +1,3 @@
-package Assignment4;
-
 public class Node {
     /**
      * Basic Node implementation for linked list. Only pointing the next Node
