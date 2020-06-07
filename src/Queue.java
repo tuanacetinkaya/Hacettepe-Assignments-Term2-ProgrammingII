@@ -106,6 +106,8 @@ public class Queue {
 
     /**
      * this method uses bubble sort technique
+     * Edit: later I find out operations with Nodes are illegal and wrote a new implementation for sorting in Operations class
+     *      but I want to keep that here because I spent so much time on LinkedList and couldn't just delete it, sorry.
      * @return the head of the sorted queue
      */
     public Node sort(){

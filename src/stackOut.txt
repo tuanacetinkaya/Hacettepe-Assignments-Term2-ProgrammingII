@@ -3,10 +3,10 @@ After removeGreater 5:
 After calculateDistance:
 Total distance=6
 After addOrRemove 3:
-18 48 45 3 5 2 1
+29 7 15 3 5 2 1
 After reverse 2:
-48 18 45 3 5 2 1
+7 29 15 3 5 2 1
 After distinctElements:
 Total distinct element=7
 After sortElements:
-1 2 3 5 18 45 48
+1 2 3 5 7 15 29

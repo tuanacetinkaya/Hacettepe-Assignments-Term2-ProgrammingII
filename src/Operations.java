@@ -1,6 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
 
 public class Operations {
@@ -15,8 +16,8 @@ public class Operations {
      */
     public Operations(String commandFileName) {
         ReadTextFile commandCenter = new ReadTextFile(commandFileName);
-        ReadTextFile stackInitialFile = new ReadTextFile("src\\stack.txt");//todo
-        ReadTextFile queueInitialFile = new ReadTextFile("src\\queue.txt");//todo
+        ReadTextFile stackInitialFile = new ReadTextFile("stack.txt");
+        ReadTextFile queueInitialFile = new ReadTextFile("queue.txt");
 
         commands = commandCenter.getListFormat();
 
@@ -131,14 +132,14 @@ public class Operations {
                 break;
 
             case("sortElements"):
-                stack.sort();
+                sortElements(stack);
                 outFile.println("After sortElements:");
                 outFile.println(stack);
                 break;
 
             case("distinctElements"):
                 outFile.println("After distinctElements:");
-                outFile.println("Total distinct element=" + distinctElements(stack.getTop(), stack.getSize()));
+                outFile.println("Total distinct element=" + distinctElements(stack));
                 break;
 
             default:
@@ -184,14 +185,14 @@ public class Operations {
                 break;
 
             case("sortElements"):
-                queue.sort();
+                sortElements(queue);
                 outFile.println("After sortElements:");
                 outFile.println(queue);
                 break;
 
             case("distinctElements"):
                 outFile.println("After distinctElements:");
-                outFile.println("Total distinct element=" + distinctElements(queue.getHead(), queue.getSize()));
+                outFile.println("Total distinct element=" + distinctElements(queue));
                 break;
 
             default:
@@ -202,23 +203,41 @@ public class Operations {
 
 
     /**
-     * @param head is the first node since implementation for stack and queue is common
-     * @param size is the total number of items in list
-     * @return number of the different values in list
+     * Method find the number of distinct elements using HashSet
+     * @param stack or queue is the target list
+     * @return the number of unique elements in list
      */
-    public int distinctElements(Node head, int size){
-        ArrayList<Integer> distinctValues = new ArrayList<>();
-        Node index = head;
-        for(int i = 0; i < size; i++){
-            if(!distinctValues.contains(index.getValue())){
-                distinctValues.add(index.getValue());
-            }
-            index = index.getNextNode();
+    private int distinctElements(Stack stack){
+        Stack helperStack = new Stack();
+        int length = stack.getSize();
+        HashSet<Integer> distinct = new HashSet<>();
+
+        for(int i = 0; i < length; i++){
+            distinct.add(stack.peek().getValue());
+            helperStack.push(stack.pop());
         }
-        return distinctValues.size();
+        for(int i = 0; i < length; i++){
+            stack.push(helperStack.pop());
+        }
+        return distinct.size();
+    }
+    private int distinctElements(Queue queue){
+        Queue helperQueue = new Queue();
+        int length = queue.getSize();
+        HashSet<Integer> distinct = new HashSet<>();
+
+        for(int i = 0; i < length; i++){
+            distinct.add(queue.peek().getValue());
+            helperQueue.add(queue.remove());
+        }
+        for(int i = 0; i < length; i++){
+            queue.add(helperQueue.remove());
+        }
+        return distinct.size();
     }
 
-    //getters and setters in case of need
+
+    //getters in case of need
     public Stack getStack() {
         return stack;
     }
@@ -380,6 +399,42 @@ public class Operations {
             return null;
         }
     }
+
+
+    /**
+     * transfer the elements to array, sort them using Arrays.sort() and push them back with the correct order.
+     * @param stack or queue to sort
+     * @return the sorted stack or queue
+     */
+    private Stack sortElements(Stack stack){
+        int length = stack.getSize();
+        int[] sortedElements = new int[length];
+
+        for(int i = 0; i< length; i++){
+            sortedElements[i] = stack.pop().getValue();
+        }
+        Arrays.sort(sortedElements);
+        for(int i = 0; i < length; i++){
+            stack.push(sortedElements[length -i -1]);
+        }
+        return stack;
+    }
+    private Queue sortElements(Queue queue){
+        int length = queue.getSize();
+        int[] sortedElements = new int[length];
+
+        for(int i = 0; i< length; i++){
+            sortedElements[i] = queue.remove().getValue();
+        }
+
+        Arrays.sort(sortedElements);
+
+        for(int i = 0; i < length; i++){
+            queue.add(sortedElements[i]);
+        }
+        return queue;
+    }
+
 
 
 
